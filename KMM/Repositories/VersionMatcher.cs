@@ -5,6 +5,9 @@ using System.Text;
 
 namespace KMM.Repositories
 {
+    /// <summary>
+    /// Handles matching of KSP versions.
+    /// </summary>
     public class VersionMatcher
     {
         private Version upper = null;
@@ -20,6 +23,7 @@ namespace KMM.Repositories
                 // A range.
                 // Split into two chunks.
                 string[] chunks = expr.Split(new string[1] { "to" }, StringSplitOptions.None);
+
                 // Start
                 chunks[0] = chunks[0].Trim();
                 if (chunks[0].Length == 0) throw new InvalidVersionException("The start of your KSP version range is empty");
@@ -38,7 +42,11 @@ namespace KMM.Repositories
             }
         }
 
-        // lower < CURRENT < upper
+        /// <summary>
+        /// lower < CURRENT < upper
+        /// </summary>
+        /// <param name="match"></param>
+        /// <returns></returns>
         public bool doesMatch(Version match)
         {
             if (upper != null)

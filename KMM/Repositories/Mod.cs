@@ -6,6 +6,9 @@ using System.Xml;
 
 namespace KMM.Repositories
 {
+    /// <summary>
+    /// Stores data regarding a mod.
+    /// </summary>
     public class Mod
     {
         public string Name = "";
@@ -18,6 +21,10 @@ namespace KMM.Repositories
         public string Thread="";
         public bool Installed = false;
 
+        /// <summary>
+        /// For loading a mod metadata file
+        /// </summary>
+        /// <param name="mod_data"></param>
         public Mod(string mod_data) {
             /*
              * Mission Aeronautics
@@ -50,6 +57,10 @@ namespace KMM.Repositories
             }
         }
 
+        /// <summary>
+        /// For loading from a repository
+        /// </summary>
+        /// <param name="node"></param>
         public Mod(XmlNode node)
         {
             Name = node.Attributes["name"].Value;
@@ -93,6 +104,16 @@ namespace KMM.Repositories
                     return true;
             }
             return false;
+        }
+
+        /// <summary>
+        /// For re-serializing to XML
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <returns></returns>
+        public XmlNode toXML(XmlDocument doc)
+        {
+            throw new NotImplementedException();
         }
     }
 }
