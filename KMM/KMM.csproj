@@ -46,10 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="frmMain.cs">
+    <Compile Include="UI\dlgEditMod.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMain.Designer.cs">
+    <Compile Include="UI\dlgEditMod.Designer.cs">
+      <DependentUpon>dlgEditMod.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -59,7 +65,11 @@
     <Compile Include="Repositories\RemoteRepository.cs" />
     <Compile Include="Repositories\VersionMatcher.cs" />
     <Compile Include="Repository.cs" />
-    <EmbeddedResource Include="frmMain.resx">
+    <Compile Include="Repositories\LocalRepository.cs" />
+    <EmbeddedResource Include="UI\dlgEditMod.resx">
+      <DependentUpon>dlgEditMod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

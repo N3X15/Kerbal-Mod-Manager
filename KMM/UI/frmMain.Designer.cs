@@ -1,4 +1,4 @@
-﻿namespace KMM
+﻿namespace KMM.UI
 {
     partial class frmMain
     {
@@ -122,6 +122,7 @@
             this.mnuNewMod.Name = "mnuNewMod";
             this.mnuNewMod.Size = new System.Drawing.Size(182, 22);
             this.mnuNewMod.Text = "New Mod...";
+            this.mnuNewMod.Click += new System.EventHandler(this.mnuNewMod_Click);
             // 
             // toolStripSeparator1
             // 

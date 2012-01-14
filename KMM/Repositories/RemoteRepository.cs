@@ -11,13 +11,20 @@ namespace KMM.Repositories
     public class RemoteRepository : Repository
     {
         public Dictionary<string, Mod> mods = new Dictionary<string, Mod>();
-        public DateTime LastUpdated { get; set;}
+        public DateTime LastUpdate { get; set;}
         public string Website { get; set; }
         public string Name { get; set; }
         public string Maintainer { get; set; }
-        public string URL = "";
+        public string URL {get;set;}
 
-        public bool refresh()
+        public RemoteRepository(XmlNode node)
+        {
+            processCacheNode(node);
+        }
+
+        public RemoteRepository() { }
+
+        public virtual bool refresh()
         {
             mods.Clear();
             WebClient wc = new WebClient();
@@ -42,15 +49,16 @@ namespace KMM.Repositories
             return true;
         }
 
-        private bool processCacheNode(XmlNode node)
+        protected bool processCacheNode(XmlNode node)
         {
             switch (node.Name)
             {
                 case "repo":
                     this.Website = node.Attributes["website"].Value;
-                    this.LastUpdated = DateTime.Parse(node.Attributes["updated"].Value);
+                    this.LastUpdate = DateTime.Parse(node.Attributes["updated"].Value);
                     this.Name = node.Attributes["name"].Value;
                     this.Maintainer = node.Attributes["maintainer"].Value;
+                    this.URL = node.Attributes["url"].Value;
                     return true;
                 case "mod":
                     Mod mod = new Mod(node);
@@ -65,7 +73,7 @@ namespace KMM.Repositories
             return new List<Mod>(mods.Values);
         }
 
-        public bool canHandle(ref XmlNode node)
+        public static bool canHandle(XmlNode node)
         {
             return node.Attributes["type"].Equals("remote");
         }
@@ -79,25 +87,13 @@ namespace KMM.Repositories
         {
             XmlElement repo = doc.CreateElement("repo");
 
-            XmlAttribute type = doc.CreateAttribute("type");
-            type.Value = "remote";
-            repo.AppendChild(type);
+            repo.SetAttribute("type","remote");
+            repo.SetAttribute("name", Name);
+            repo.SetAttribute("website", Website);
+            repo.SetAttribute("maintainer", Maintainer);
+            repo.SetAttribute("lastUpdate", LastUpdate.ToString());
 
-            XmlAttribute name = doc.CreateAttribute("name");
-            name.Value = Name;
-            repo.AppendChild(name);
-
-            XmlAttribute website = doc.CreateAttribute("website");
-            website.Value = Website;
-            repo.AppendChild(website);
-
-            XmlAttribute maintainer = doc.CreateAttribute("maintainer");
-            maintainer.Value = Maintainer;
-            repo.AppendChild(maintainer);
-
-            XmlAttribute url = doc.CreateAttribute("url");
-            url.Value = URL;
-            repo.AppendChild(url);
+            repo.SetAttribute("url", URL);
 
             return repo;
         }

@@ -45,13 +45,6 @@ namespace KMM
         /// Reserialize repo
         /// </summary>
         /// <returns></returns>
-        XmlNode toXML();
-
-        /// <summary>
-        /// Can this repo handler process this XML node?
-        /// </summary>
-        /// <param name="current"></param>
-        /// <returns></returns>
-        bool canHandle(ref XmlNode current);
+        XmlNode toXML(ref XmlDocument doc);
     }
 }
